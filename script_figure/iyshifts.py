@@ -35,7 +35,7 @@ def thresbins_iy(data, ri, iy, vlinemin, vlinemax,
     plt.show()
         
         
-    return 
+    return fig, ax
 
 
 #load in catalogs 
@@ -100,7 +100,7 @@ elgmask = tert['TERTIARY_TARGET'] == 'ELG'
 fiber_status = tert['COADD_FIBERSTATUS'] == 0 
 exposure = tert['TSNR2_LRG']*12.15
 tmask = exposure > 200
-t_mask = np.logical_and.reduce((tmask, fiber_status, elgmask, tert['YSH']))
+t_mask = np.logical_and.reduce((tmask, fiber_status, elgmask, tert['YSH'] == True))
 elgs = tert[t_mask]
 
 #merge both hsc_cat and elgs catalogs, this combined catalog will be used to tweak the cuts and check our redshift distribution

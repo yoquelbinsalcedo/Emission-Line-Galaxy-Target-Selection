@@ -63,7 +63,8 @@ elgmask = tert['TERTIARY_TARGET'] == 'ELG'
 fiber_status = tert['COADD_FIBERSTATUS'] == 0 
 exposure = tert['TSNR2_LRG']*12.15
 tmask = exposure > 200
-t_mask = np.logical_and.reduce((tmask, fiber_status, elgmask, tert['YSH']))
+ysh = tert['YSH'] == True
+t_mask = np.logical_and.reduce((tmask, fiber_status, elgmask, ysh))
 elgs = tert[t_mask]
 
 #merge both hsc_cat and elgs catalogs, this combined catalog will be used to tweak the cuts and check our redshift distribution
@@ -85,11 +86,16 @@ snr_mask_comb = np.logical_or(snr_mask_comb, chi2_comb > 25)
 snr_mask_comb_fail =~ snr_mask_comb
 
 #Defining our specz and final cuts for our optimized sample
+rishift = 0
+iyshift = 0.049852473473876335
+izmin = 0.35643
+gfiblim = 24.26703632751025
+
 spectro_z = combined_cat['Z'][snr_mask_comb]
-color_mask = np.logical_and((combined_cat['r_mag'][snr_mask_comb] - combined_cat['i_mag'][snr_mask_comb] < combined_cat['i_mag'][snr_mask_comb] - combined_cat['y_mag'][snr_mask_comb] - 0.19 ),
-                             (combined_cat['i_mag'][snr_mask_comb] - combined_cat['y_mag'][snr_mask_comb] > 0.35 + 0.05636818841724967))
-color_mask &= (combined_cat['i_mag'][snr_mask_comb] - combined_cat['z_mag'][snr_mask_comb]) > 0.37442580263398095
-ccuts = np.logical_and(color_mask, combined_cat['g_fiber_mag'][snr_mask_comb] < 24.253228615646897) 
+color_mask = np.logical_and((combined_cat['r_mag'][snr_mask_comb] - combined_cat['i_mag'][snr_mask_comb] < combined_cat['i_mag'][snr_mask_comb] - combined_cat['y_mag'][snr_mask_comb] - 0.19 + rishift),
+                             (combined_cat['i_mag'][snr_mask_comb] - combined_cat['y_mag'][snr_mask_comb] > 0.35 + iyshift))
+color_mask &= (combined_cat['i_mag'][snr_mask_comb] - combined_cat['z_mag'][snr_mask_comb]) > izmin
+ccuts = np.logical_and(color_mask, combined_cat['g_fiber_mag'][snr_mask_comb] < gfiblim) 
 
 #load in the desi ELG distributions to plot against our final distribution
 data = table.Table.read('/Users/yokisalcedo/Desktop/Emission-Line-Galaxy-Target-Selection/desi_elg_ts_zenodo/main-800coaddefftime1200-nz-zenodo.ecsv', format='ascii.ecsv')
@@ -109,7 +115,6 @@ vlo_desi = data['ELG_VLO_DESI']
 # - {AREA_SOUTH_DES: 1100}
 weightedavg = (lop_north * 4400 + lop_south_decal * 8500 + lop_south_des * 1100 )/(14000)
 
-'''Comparing our ELG's to DESI LOP ELG's '''
 #normalize
 values, edges = np.histogram(spectro_z[ccuts], bins = np.linspace(0,2,41))
 wrongnorm = np.sum(values)

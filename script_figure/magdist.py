@@ -80,7 +80,7 @@ ax1.axvline(x = 24,ls= '--', color='black')
 
 ax2.hist(hsc_cat['g_fiber_mag'][cuts], bins = np.linspace(18, 28, 150), color = 'grey')
 ax2.hist(hsc_cat['g_fiber_mag'][inlimit], bins = np.linspace(18, 28, 150), color = 'blue')
-ax2.set_xlabel('g Fiber Magnitude', fontsize = 18)
+ax2.set_xlabel('g Fiber magnitude', fontsize = 18)
 ax2.axvline(x = 24.3,ls= '--', color='black')
 # ax2.ticklabel_format(axis = 'y', style = 'sci', scilimits=(0,0))
 
@@ -92,7 +92,7 @@ ax3.axvline(x = 24,ls= '--', color='black')
 
 ax4.hist(hsc_cat['r_fiber_mag'][cuts], bins = np.linspace(18, 28, 150), color = 'grey')
 ax4.hist(hsc_cat['r_fiber_mag'][inlimit], bins = np.linspace(18, 28, 150), color = 'blue')
-ax4.set_xlabel('r Fiber Magnitude', fontsize = 18)
+ax4.set_xlabel('r Fiber magnitude', fontsize = 18)
 ax4.axvline(x = 24.3,ls= '--', color='black')
 # ax4.ticklabel_format(axis = 'y', style = 'sci', scilimits=(0,0))
 
@@ -101,7 +101,7 @@ for ax in (ax1, ax2, ax3, ax4):
     ax.xaxis.set_tick_params(labelsize=12)
     ax.yaxis.set_tick_params(labelsize=12)
     ax.set_xlim(20, 27)
-    ax.set_ylabel('Count * 10^4', fontsize = 18)
+    ax.set_ylabel('Count * $10^{4}$', fontsize = 18)
     yticklabels = [f'{it / 1e4:0.1f}' for it in ax.get_yticks()]
     ax.set_yticks(ticks=ax.get_yticks(), labels=yticklabels)
     ax.set_ylim(0, 27000)

@@ -38,7 +38,7 @@ def thresbins_ri(data,ri,
 
         
         
-    return
+    return fig, ax
 
 
 #load in catalogs 
@@ -97,13 +97,12 @@ hsc_cat = hsc_cat[mask]
 
 #load in specz cataloges 
 tert = table.Table.read('/Users/yokisalcedo/Desktop/Emission-Line-Galaxy-Target-Selection/data/all_elgs.fits',format='fits',hdu=1)
-
 #cleaning specz catalog
 elgmask = tert['TERTIARY_TARGET'] == 'ELG'
 fiber_status = tert['COADD_FIBERSTATUS'] == 0 
 exposure = tert['TSNR2_LRG']*12.15
 tmask = exposure > 200
-t_mask = np.logical_and.reduce((tmask, fiber_status, elgmask, tert['YSH']))
+t_mask = np.logical_and.reduce((tmask, fiber_status, elgmask, tert['YSH'] == True))
 elgs = tert[t_mask]
 
 #merge both hsc_cat and elgs catalogs, this combined catalog will be used to tweak the cuts and check our redshift distribution

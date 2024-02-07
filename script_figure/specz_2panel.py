@@ -67,7 +67,7 @@ elgmask = tert['TERTIARY_TARGET'] == 'ELG'
 fiber_status = tert['COADD_FIBERSTATUS'] == 0 
 exposure = tert['TSNR2_LRG']*12.15
 tmask = exposure > 200
-t_mask = np.logical_and.reduce((tmask, fiber_status, elgmask, tert['YSH']))
+t_mask = np.logical_and.reduce((tmask, fiber_status, elgmask, tert['YSH'] == True))
 elgs = tert[t_mask]
 #Criteria for good redshifts
 o2_snr = elgs['OII_FLUX']*np.sqrt(elgs['OII_FLUX_IVAR'])   
@@ -100,10 +100,15 @@ specz_before = elgs['Z'][snr_mask]
 specz_comb = combined_cat['Z'][snr_mask_comb]
 
 #Color cuts and gfib lim after optimization for 1.05 < z < 1.65 sample
-color_mask = np.logical_and((combined_cat['r_mag'][snr_mask_comb] - combined_cat['i_mag'][snr_mask_comb] < combined_cat['i_mag'][snr_mask_comb] - combined_cat['y_mag'][snr_mask_comb] - 0.19 ),
-                             (combined_cat['i_mag'][snr_mask_comb] - combined_cat['y_mag'][snr_mask_comb] > 0.35 + 0.05636818841724967))
-color_mask &= (combined_cat['i_mag'][snr_mask_comb] - combined_cat['z_mag'][snr_mask_comb]) > 0.37442580263398095
-ccuts = np.logical_and(color_mask, combined_cat['g_fiber_mag'][snr_mask_comb] < 24.253228615646897) 
+rishift = 0 
+iyshift = 0.06636818841724967
+izmin = 0.36442580263398095
+gfiblim = 24.263228615646897
+
+color_mask = np.logical_and((combined_cat['r_mag'][snr_mask_comb] - combined_cat['i_mag'][snr_mask_comb] < combined_cat['i_mag'][snr_mask_comb] - combined_cat['y_mag'][snr_mask_comb] - 0.19 + rishift),
+                             (combined_cat['i_mag'][snr_mask_comb] - combined_cat['y_mag'][snr_mask_comb] > 0.35 + iyshift))
+color_mask &= (combined_cat['i_mag'][snr_mask_comb] - combined_cat['z_mag'][snr_mask_comb]) > izmin
+ccuts = np.logical_and(color_mask, combined_cat['g_fiber_mag'][snr_mask_comb] < gfiblim) 
 
 #Plot the 2 histograms side by side comparing our sample before and after optimizing color cuts and gfiber limiting mag
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 5))
@@ -114,6 +119,7 @@ ax1.set_xlabel('$z_{\mathrm{spec}}$', fontsize = 18)
 ax1.set_ylabel('Count', fontsize = 18)
 ax1.xaxis.set_tick_params(labelsize = 12)
 ax1.yaxis.set_tick_params(labelsize = 12)
+
 ax2.hist(specz_comb[ccuts], bins = np.linspace(0, 2, 100), histtype= 'step', color = 'black', label = 'After color cut optimization')
 ax2.axvline(x = 1.05,ls= '--', color='black')
 ax2.axvline(x = 1.65,ls= '--', color='black')

@@ -74,7 +74,7 @@ elgmask = tert['TERTIARY_TARGET'] == 'ELG'
 fiber_status = tert['COADD_FIBERSTATUS'] == 0 
 exposure = tert['TSNR2_LRG']*12.15
 tmask = exposure > 200
-t_mask = np.logical_and.reduce((tmask, fiber_status, elgmask, tert['YSH']))
+t_mask = np.logical_and.reduce((tmask, fiber_status, elgmask, tert['YSH'] == True))
 elgs = tert[t_mask]
 
 #Load in hsc catalog with grz band photozs
