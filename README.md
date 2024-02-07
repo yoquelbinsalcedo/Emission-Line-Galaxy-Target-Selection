@@ -1,3 +1,5 @@
 # Emission-Line-Galaxy-Target-Selection-
  
-My project is on emission line galaxy selection for DESI-2 using COSMOS202 catalog data. 
+  This is a repository for the code used for an emission line galaxy (ELG) target selection for DESI-II using deep HSC grizy imaging and photometric redshifts from the COSMOS2020 catalog. 
+
+
