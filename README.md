@@ -31,6 +31,6 @@ Make sure this is in a directory that **python knows the path of**. This is a mo
 * shift to the *r* - *i* < *i* - *y* - 0.19 color cut
 * shift to the *i* - *y* > 0.35 color cut
 * *i* - *z* minimum
- These are applied to the HSC wide catalog and a spectroscopic cross-matched catalog. This also contains wrapper functions to be passed into the `scipy.optimize.opt` routine for optimization where the free parameters are the function arguments above.
+These are applied to the HSC wide catalog and a spectroscopic cross-matched catalog. This also contains wrapper functions to be passed into the `scipy.optimize.opt` routine for optimization where the free parameters are the function arguments above.
 
 ### Optimization pilot and truth samples 
