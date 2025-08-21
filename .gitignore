@@ -1,3 +1,10 @@
+##
+*.csv
+*.hdf5
+*.parquet
+*.png
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
