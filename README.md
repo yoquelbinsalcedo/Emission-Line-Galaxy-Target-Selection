@@ -1,6 +1,6 @@
-# Emission-Line-Galaxy-Target-Selection-
+# Design of high redshift emission-line galaxy target selections for DESI-II
  
-  This is a repository for the code used for an emission line galaxy (ELG) target selection for DESI-II using deep HSC Wide grizy imaging and photometric redshifts from the COSMOS2020 catalog. The HSC wide imaging is the best proxy for desgining ELG samples that could be selected with early Large Synoptic Survey Telescope (LSST) imaging.
+  This is a repository for the code used for an emission-line galaxy (ELG) target selection for DESI-II using deep HSC Wide grizy imaging and photometric redshifts from the COSMOS2020 catalog. The HSC wide imaging is the best proxy for desgining ELG samples that could be selected with early Large Synoptic Survey Telescope (LSST) imaging.
 
 ## How to use the scripts in analysis folder:
 You will need **python 3.8 or higher**
