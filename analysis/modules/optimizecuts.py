@@ -1,6 +1,6 @@
-# Below are the functions used to optimize the ELG target selection cuts at high redshift for two different samples 
 import numpy as np
 
+# Below are the functions used to optimize the ELG target selection cuts at high redshift for two different samples 
 
 def get_surf_density_pilot(cat_full, rishift=0, iyshift=0, izmin=-99, glim=99, gfiblim=99):
     '''This function takes in a catalog and the color cuts to use and outputs the surface density'''
