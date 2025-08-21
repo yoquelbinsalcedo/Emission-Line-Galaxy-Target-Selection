@@ -27,11 +27,12 @@ Pilot and Truth refers to two different spectroscopic samples that were obtained
 
 ### optimizecuts.py module:
 Make sure this is in a directory that **python knows the path of**. This is a module which contains functions to calculate **target density**, **redshift success rate**, **redshift range success rate**, and **net target density yield** for both **Pilot** and **Truth** samples.<br> These functions require:<br> 
-* set of g-fiber limiting magnitudes
+* *g*-fiber limiting magnitude
 * shift to the *r* - *i* < *i* - *y* - 0.19 color cut
 * shift to the *i* - *y* > 0.35 color cut
 * *i* - *z* minimum
 
-These are applied to the HSC wide catalog and a spectroscopic cross-matched catalog. This also contains wrapper functions to be passed into the `scipy.optimize.opt` routine for optimization where the free parameters are the function arguments above.
+These are applied to the HSC wide catalog and a spectroscopic cross-matched catalog. This module also contains wrapper functions to be passed into the `scipy.optimize.opt` function in order to define a **loss function to minimize**.
 
-### Optimization pilot and truth samples 
+### Optimization of pilot and truth samples:
+The `optimize_selection.py` scripts load in the HSC wide catalog and a cross-matched spectroscopic subset catalog to optimize selection cuts for selecting high redshift ELGs. After providing guesses for the optimal free parameter values and a weight for the wrapper defining our loss function, the optimized values along with the corresponding summary statistics will be printed out.
