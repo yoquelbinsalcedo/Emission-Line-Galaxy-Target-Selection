@@ -5,13 +5,13 @@
 ## How to use the scripts in analysis folder:
 You will need **python 3.8 or higher**
 ### What order to run cosmos2020 scripts:
-1.) train_all_feature_random_forest_1.1_1.6
-2.) plot_permutation_feature_importance_1.1_1.6
-3.) train_best_feature_random_forest_1.1_1.6
-4.) plot_color_color_best_feature_random_forest_prob_1.1_1.6
-5.) plot_roc_curve_all_feature_1.1_1.6
-6.) plot_roc_curve_best_feature_1.1_1.6
-7.) plot_color_color_best_feature_random_forest_prob_selection_1.1_1.6
-8.) plot_color_cut_selection_1.1_1.6
-9.) plot_hist_color_cut_selection_1.1_1.6
-10.) plot_hist_best_selections_1.1_1.6
+**1.)** train_all_feature_random_forest_1.1_1.6
+**2.)** plot_permutation_feature_importance_1.1_1.6
+**3.)** train_best_feature_random_forest_1.1_1.6
+**4.)** plot_color_color_best_feature_random_forest_prob_1.1_1.6
+**5.)** plot_roc_curve_all_feature_1.1_1.6
+**6.)** plot_roc_curve_best_feature_1.1_1.6
+**7.)** plot_color_color_best_feature_random_forest_prob_selection_1.1_1.6
+**8.)** plot_color_cut_selection_1.1_1.6
+**9.)** plot_hist_color_cut_selection_1.1_1.6
+**10.)** plot_hist_best_selections_1.1_1.6
