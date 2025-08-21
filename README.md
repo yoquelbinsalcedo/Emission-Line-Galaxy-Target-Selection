@@ -6,16 +6,16 @@
 You will need **python 3.8 or higher**
 
 ### What order to run cosmos2020 scripts:
-**1.)** train_all_feature_random_forest_1.1_1.6
-**2.)** plot_permutation_feature_importance_1.1_1.6
-**3.)** train_best_feature_random_forest_1.1_1.6
+**1.)** train_all_feature_random_forest_1.1_1.6<br>
+**2.)** plot_permutation_feature_importance_1.1_1.6<br>
+**3.)** train_best_feature_random_forest_1.1_1.6<br>
 **4.)** plot_color_color_best_feature_random_forest_prob_1.1_1.6
-**5.)** plot_roc_curve_all_feature_1.1_1.6
-**6.)** plot_roc_curve_best_feature_1.1_1.6
-**7.)** plot_color_color_best_feature_random_forest_prob_selection_1.1_1.6
-**8.)** plot_color_cut_selection_1.1_1.6
-**9.)** plot_hist_color_cut_selection_1.1_1.6
-**10.)** plot_hist_best_selections_1.1_1.6
+**5.)** plot_roc_curve_all_feature_1.1_1.6<br>
+**6.)** plot_roc_curve_best_feature_1.1_1.6<br>
+**7.)** plot_color_color_best_feature_random_forest_prob_selection_1.1_1.6<br>
+**8.)** plot_color_cut_selection_1.1_1.6<br>
+**9.)** plot_hist_color_cut_selection_1.1_1.6<br>
+**10.)** plot_hist_best_selections_1.1_1.6<br>
 
-### Running pilot/truth optimization scripts:
-Pilot and Truth refers to two different spectroscopic samples that were obtained by the Dark Energy Spectroscopic Instrument (DESI). The color cuts used to obtain the **Pilot Sample** are the same as those applied in the **plot_color_cut_selection_1.1_1.6** cosmos2020 script. The purpose of this sample was to test a target selection of high redshift (1.1 < z < 1.6) ELGs using HSC wide imaging as a prototype for upcoming LSST imaging. The **Truth Sample** was obtained using broader color cuts than the current DESI ELG sample in order to study how imaging systematics affect DESI ELGs
+### Short description of pilot and truth samples:
+Pilot and Truth refers to two different spectroscopic samples that were obtained by the Dark Energy Spectroscopic Instrument (DESI). The color cuts used to obtain the **Pilot Sample** are the same as those applied in the **plot_color_cut_selection_1.1_1.6** cosmos2020 script. The purpose of this sample was to test a target selection of high redshift (1.1 < z < 1.6) ELGs using HSC wide imaging as a prototype for upcoming LSST imaging. The **Truth Sample** was obtained using broader color cuts than the current DESI ELG sample in order to study how imaging systematics affect DESI ELGs. This sample was also used to optimize a high redshift ELG selection using simple color cuts.
