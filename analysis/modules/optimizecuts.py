@@ -213,10 +213,10 @@ def get_success_rate_noisy(catalog, zrange=(1.1, 1.6), use_lop_good_z=False, ri_
 
 
 def opt_wrapper_noisy(x, combined_cat, hsc_cat, zrange=(1.1, 1.6), w=0.1, target=1370):
-    deltari, deltaiy, izmin, gfiblim = x
-    density = get_surf_density_noisy(hsc_cat, rishift=deltari, iyshift=deltaiy, izmin=izmin, gfiblim=gfiblim)
-    zsuccess, rangesuccess = get_success_rate_noisy(combined_cat, zrange=zrange, rishift=deltari, iyshift=deltaiy, izmin=izmin, gfiblim=gfiblim)
+    deltari, deltaiy, deltaiz, gfiblim = x
+    density = get_surf_density_noisy(hsc_cat, rishift=deltari, iyshift=deltaiy, izshift=deltaiz, gfiblim=gfiblim)
+    zsuccess, rangesuccess = get_success_rate_noisy(combined_cat, zrange=zrange, rishift=deltari, iyshift=deltaiy, izshift=deltaiz, gfiblim=gfiblim)
     density_yield = density * rangesuccess
     target = target
-    loss = -rangesuccess*100 + w*(density_yield - target)**2 
+    loss = -rangesuccess*100 + w*(density_yield - target)**2
     return loss
