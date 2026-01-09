@@ -151,12 +151,12 @@ def opt_wrapper_truth(x, combined_cat, hsc_cat, zrange=(1.1, 1.6), w=0.1, target
 
 # Below are the functions to be used for the optimizing the spec-truth sample with noisy hsc wide photometry
 
-def get_surf_density_noisy(cat_full, ri_targcut=-0.19, iy_targcut=0.35, rishift=0, iyshift=0, izmin=-99, glim=99, gfiblim=99):
+def get_surf_density_noisy(cat_full, ri_cut=0.05, iy_cut=0.50, iz_cut=0.35, rishift=0, iyshift=0, izshift=0, glim=99, gfiblim=99):
     '''This function takes in a catalog and the color cuts to use and outputs the surface density'''
     # define the color cuts
-    mask_iyri = np.logical_and((cat_full['r_mag_noisy'] - cat_full['i_mag_noisy'] < cat_full['i_mag_noisy'] - cat_full['y_mag_noisy'] + ri_targcut + rishift),
-                           (cat_full['i_mag_noisy'] - cat_full['y_mag_noisy'] > iy_targcut + iyshift)) 
-    mask_iz = (cat_full['i_mag_noisy'] - cat_full['z_mag_noisy']) > izmin
+    mask_iyri = np.logical_and((cat_full['r_mag_noisy'] - cat_full['i_mag_noisy'] < cat_full['i_mag_noisy'] - cat_full['z_mag_noisy'] + ri_cut + rishift),
+                           (cat_full['i_mag_noisy'] - cat_full['y_mag_noisy'] > iy_cut + iyshift)) 
+    mask_iz = (cat_full['i_mag_noisy'] - cat_full['z_mag_noisy']) > iz_cut + izshift
     mask_color = np.logical_and(mask_iyri, mask_iz)
     
     # define the magnitude cuts
@@ -170,13 +170,13 @@ def get_surf_density_noisy(cat_full, ri_targcut=-0.19, iy_targcut=0.35, rishift=
     return surf_density
 
 
-def get_success_rate_noisy(catalog, zrange=(1.1, 1.6), use_lop_good_z=False, ri_targcut=-0.19, iy_targcut=0.35, rishift=0, iyshift=0, izmin=-99, glim=99, gfiblim=99):
+def get_success_rate_noisy(catalog, zrange=(1.1, 1.6), use_lop_good_z=False, ri_cut=0.05, iy_cut=0.50, iz_cut=0.35, rishift=0,  iyshift=0, izshift=0, glim=99, gfiblim=99):
     '''This function takes in a catalog and the color cuts to use and outputs the success rate and redshift range success rate'''
     # define the color cuts
     mask_iyri = np.logical_and(
-        (catalog['r_mag_noisy'] - catalog['i_mag_noisy'] < catalog['i_mag_noisy'] - catalog['y_mag_noisy'] + ri_targcut + rishift),
-        (catalog['i_mag_noisy'] - catalog['y_mag'] > iy_targcut + iyshift)) 
-    mask_iz = (catalog['i_mag_noisy'] - catalog['z_mag_noisy']) > izmin
+        (catalog['r_mag_noisy'] - catalog['i_mag_noisy'] < catalog['i_mag_noisy'] - catalog['z_mag_noisy'] + ri_cut + rishift),
+        (catalog['i_mag_noisy'] - catalog['y_mag_noisy'] > iy_cut + iyshift)) 
+    mask_iz = (catalog['i_mag_noisy'] - catalog['z_mag_noisy']) > iz_cut + izshift
     colorcuts = np.logical_and(mask_iyri, mask_iz)
 
     # define the magnitude cuts
