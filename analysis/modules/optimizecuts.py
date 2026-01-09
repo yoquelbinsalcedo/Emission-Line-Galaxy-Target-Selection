@@ -160,7 +160,7 @@ def get_surf_density_noisy(cat_full, ri_cut=0.05, iy_cut=0.50, iz_cut=0.35, rish
     mask_color = np.logical_and(mask_iyri, mask_iz)
     
     # define the magnitude cuts
-    mask_glims = np.logical_and(cat_full['g_mag_noisy'] < glim, cat_full['g_fiber_mag'] < gfiblim)
+    mask_glims = np.logical_and(cat_full['g_mag_noisy'] < glim, cat_full['g_fiber_mag_noisy'] < gfiblim)
     # combine the color and magnitude cuts
     cuts_final = np.logical_and(mask_color, mask_glims)
     cutcat = cat_full[cuts_final]
@@ -180,7 +180,7 @@ def get_success_rate_noisy(catalog, zrange=(1.1, 1.6), use_lop_good_z=False, ri_
     colorcuts = np.logical_and(mask_iyri, mask_iz)
 
     # define the magnitude cuts
-    mask_glims = np.logical_and(catalog['g_mag_noisy'] < glim, catalog['g_fiber_mag'] < gfiblim)
+    mask_glims = np.logical_and(catalog['g_mag_noisy'] < glim, catalog['g_fiber_mag_noisy'] < gfiblim)
 
     # combine the color and magnitude cuts
     # 1400 sec exposure cut
