@@ -1,5 +1,6 @@
 # Below are the functions used to optimize the ELG target selection cuts at high redshift for two different samples
 import numpy as np
+import pickle
 
 def get_surf_density_pilot(cat_full, rishift=0, iyshift=0, ri_targcut=-0.19, iy_targcut=0.35, izmin=-99, glim=99, gfiblim=99):
     '''This function takes in a catalog and the color cuts to use and outputs the surface density'''
@@ -138,6 +139,55 @@ def get_success_rate_truth(catalog, zrange=(1.1, 1.6), use_lop_good_z=False, ri_
     
     return redshift_success_rate, redshift_range_yield
 
+
+def get_surf_density_rf(cat_full, rf_prob, rf_prob_cut=0.025, gfiblim=99):
+    '''This function takes in a catalog, a g-fiber magnitude cut, and a random forest probability cut to use and outputs the surface density'''
+    
+    # define the rf cut
+    mask_rf_prob = rf_prob >= rf_prob_cut
+    # define the g-fiber magnitude cuts
+    mask_gfib = cat_full['g_fiber_mag'] < gfiblim
+    
+    # combine the rf and magnitude cuts
+    cuts_final = np.logical_and(mask_rf_prob, mask_gfib)
+    cutcat = cat_full[cuts_final]
+    
+    # calculate the surface density
+    area = 16  # units of deg^2
+    surf_density = len(cutcat)/area
+    return surf_density
+
+
+def get_success_rate_rf(catalog, rf_prob, zrange=(1.1, 1.6), rf_prob_cut=0.025, gfiblim=99):
+    '''This function takes in a catalog, a g-fiber magnitude cut, and a random forest probability cut to use and outputs the success rate and redshift range success rate'''
+
+    # define the rf cut
+    mask_rf_prob = rf_prob >= rf_prob_cut
+    # define the g fiber magnitude cut
+    mask_gfib = catalog['g_fiber_mag'] < gfiblim
+
+    # combine the color and magnitude cuts
+    # 1400 sec exposure cut
+    exposure = catalog['EFFTIME']
+    mask_exposure = exposure < 1400
+    cuts_final = np.logical_and(mask_rf_prob, mask_gfib)
+    
+    # quality cuts for reliable speczs
+    o2_snr = catalog['OII_FLUX']*np.sqrt(catalog['OII_FLUX_IVAR'])   
+    chi2 = catalog['DELTACHI2']
+    mask_reliable_z = np.logical_or(o2_snr > 10**(0.9 - 0.2*np.log10(chi2)), chi2 > 25)
+
+    # calculate the fraction of objects with good redshifts with the 700 < t < 1400 sample 
+    redshift_success_rate = np.sum(np.logical_and.reduce((cuts_final, mask_exposure, mask_reliable_z)))/np.sum(np.logical_and(cuts_final, mask_exposure))
+    
+    # calculate the redshift range success rate for t > 700 sample
+    mask_redshift = np.logical_and(catalog['Z'] > zrange[0], catalog['Z'] < zrange[1])
+    range_success = np.sum(np.logical_and.reduce((cuts_final, mask_reliable_z, mask_redshift)))/np.sum(np.logical_and(cuts_final, mask_reliable_z))
+    
+    # calculate the net redshift yield
+    redshift_range_yield = range_success*redshift_success_rate
+    
+    return redshift_success_rate, redshift_range_yield
 
 def opt_wrapper_truth(x, combined_cat, hsc_cat, zrange=(1.1, 1.6), w=0.1, target=1370):
     deltari, deltaiy, izmin, gfiblim = x
